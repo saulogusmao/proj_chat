@@ -2,9 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:proj_chat/models/auth_form_data.dart';
 
-class AuthForm extends StatelessWidget {
+class AuthForm extends StatefulWidget {
   const AuthForm({super.key});
+
+  @override
+  State<AuthForm> createState() => _AuthFormState();
+}
+
+class _AuthFormState extends State<AuthForm> {
+  final _formKey = GlobalKey<FormState>();
+  final _formData = AuthFormData();
+
+  void _submit() {
+    _formKey.currentState?.validate();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +26,7 @@ class AuthForm extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(16),
         child: Form(
+          key: _formKey,
           child: Column(
             children: [
               TextFormField(
@@ -27,12 +41,20 @@ class AuthForm extends StatelessWidget {
               ),
               SizedBox(height: 12),
               ElevatedButton(
-                onPressed: () {},
-                child: Text('Entrar'),
+                onPressed: _submit,
+                child: Text(_formData.isLogin
+                    ? 'Criar uma nova conta?'
+                    : 'Já possui conta?'),
               ),
               TextButton(
-                onPressed: () {},
-                child: Text('Criar uma nova conta?'),
+                onPressed: () {
+                  setState(() {
+                    _formData.toggleAuthMode();
+                  });
+                },
+                child: Text(_formData.isLogin
+                    ? 'Criar uma nova conta?'
+                    : 'Já possui conta?'),
               ),
             ],
           ),
