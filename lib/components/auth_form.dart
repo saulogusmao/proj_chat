@@ -31,12 +31,22 @@ class _AuthFormState extends State<AuthForm> {
             children: [
               if (_formData.isSignup)
                 TextFormField(
+                  key: ValueKey('name'),
+                  initialValue: _formData.name,
+                  onChanged: (name) =>
+                      _formData.name = name, //para guardar o valor
                   decoration: InputDecoration(labelText: 'Nome'),
                 ),
               TextFormField(
+                key: ValueKey('email'),
+                initialValue: _formData.email,
+                onChanged: (email) => _formData.email = email,
                 decoration: InputDecoration(labelText: 'E-mail'),
               ),
               TextFormField(
+                key: ValueKey('password'),
+                initialValue: _formData.password,
+                onChanged: (password) => _formData.password = password,
                 obscureText: true,
                 decoration: InputDecoration(labelText: 'Senha'),
               ),
