@@ -5,7 +5,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:proj_chat/models/auth_form_data.dart';
 
 class AuthForm extends StatefulWidget {
-  const AuthForm({super.key});
+  final void Function(AuthFormData) onSubmit;
+
+  const AuthForm({required this.onSubmit, super.key});
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -18,6 +20,8 @@ class _AuthFormState extends State<AuthForm> {
   void _submit() {
     final isValid = _formKey.currentState?.validate() ?? false;
     if (!isValid) return;
+
+    widget.onSubmit(_formData);
   }
 
   @override
@@ -37,8 +41,8 @@ class _AuthFormState extends State<AuthForm> {
                   onChanged: (name) =>
                       _formData.name = name, //para guardar o valor
                   decoration: InputDecoration(labelText: 'Nome'),
-                  validator: (_name) {
-                    final name = _name ?? '';
+                  validator: (localName) {
+                    final name = localName ?? '';
                     if (name.trim().length < 5) {
                       //'trim' é referente ao espaço em branco
                       return 'Nome deve ter no mínimo 5 caracteres.';
@@ -51,8 +55,8 @@ class _AuthFormState extends State<AuthForm> {
                 initialValue: _formData.email,
                 onChanged: (email) => _formData.email = email,
                 decoration: InputDecoration(labelText: 'E-mail'),
-                validator: (_email) {
-                  final email = _email ?? '';
+                validator: (localEmail) {
+                  final email = localEmail ?? '';
                   if (!email.contains('@')) {
                     return 'E-mail informado não é válido';
                   }
@@ -65,8 +69,8 @@ class _AuthFormState extends State<AuthForm> {
                 onChanged: (password) => _formData.password = password,
                 obscureText: true,
                 decoration: InputDecoration(labelText: 'Senha'),
-                validator: (_password) {
-                  final password = _password ?? '';
+                validator: (localPassword) {
+                  final password = localPassword ?? '';
                   if (password.length < 6) {
                     return 'Senha deve ter no mínimo 6 caracteres.';
                   }
@@ -76,9 +80,7 @@ class _AuthFormState extends State<AuthForm> {
               SizedBox(height: 12),
               ElevatedButton(
                 onPressed: _submit,
-                child: Text(_formData.isLogin
-                    ? 'Criar uma nova conta?'
-                    : 'Já possui conta?'),
+                child: Text(_formData.isLogin ? 'Entrar' : 'Cadastrar'),
               ),
               TextButton(
                 onPressed: () {
