@@ -11,7 +11,7 @@ class AuthMockService implements AuthService {
   static MultiStreamController<ChatUser?>? _controller;
   static final _userStream = Stream<ChatUser?>.multi((controller) {
     _controller = controller;
-    controller.add(null);
+    _updateUser(null);
   });
 
   ChatUser? get currentUser {
@@ -26,4 +26,9 @@ class AuthMockService implements AuthService {
       String nome, String email, String password, File image) async {}
   Future<void> login(String email, String password) async {}
   Future<void> logout() async {}
+
+  static void _updateUser(ChatUser? user) {
+    _currentUser = user;
+    _controller?.add(_currentUser);
+  }
 }
