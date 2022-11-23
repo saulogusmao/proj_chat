@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:proj_chat/components/auth_form.dart';
-import 'package:proj_chat/models/auth_form_data.dart';
+import 'package:proj_chat/core/models/auth_form_data.dart';
 
 class AuthPage extends StatefulWidget {
   //'stafeful' devido ao 'mode login'
