@@ -29,6 +29,12 @@ class _AuthPageState extends State<AuthPage> {
         );
       } else {
         //Signup
+        await AuthMockService().signup(
+          formData.name,
+          formData.email,
+          formData.password,
+          formData.image,
+        );
       }
     } catch (error) {
       //tratar erro
