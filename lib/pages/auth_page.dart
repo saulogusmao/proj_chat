@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:proj_chat/components/auth_form.dart';
 import 'package:proj_chat/core/models/auth_form_data.dart';
 import 'package:proj_chat/core/services/auth/auth_mock_service.dart';
+import 'package:proj_chat/core/services/auth/auth_service.dart';
 
 class AuthPage extends StatefulWidget {
   //'stafeful' devido ao 'mode login'
@@ -23,13 +24,13 @@ class _AuthPageState extends State<AuthPage> {
       });
       if (formData.isLogin) {
         //login
-        await AuthMockService().login(
+        await AuthService().login(
           formData.email,
           formData.password,
         );
       } else {
         //Signup
-        await AuthMockService().signup(
+        await AuthService().signup(
           formData.name,
           formData.email,
           formData.password,
