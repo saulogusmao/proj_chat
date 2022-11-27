@@ -23,6 +23,7 @@ class ChatPage extends StatelessWidget {
             ),
             items: [
               DropdownMenuItem(
+                value: 'logout',
                 child: Container(
                   child: Row(
                     children: [
