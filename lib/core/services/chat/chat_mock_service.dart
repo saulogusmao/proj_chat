@@ -24,7 +24,7 @@ class ChatMockService implements ChatService {
       userImageURL: 'assets/images/avatar.png',
     ),
     ChatMessage(
-      id: '1',
+      id: '3',
       text: 'Sim. Pode ser agora.',
       createdAt: DateTime.now(),
       userId: '123',
