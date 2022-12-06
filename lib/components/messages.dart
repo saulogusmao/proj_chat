@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:proj_chat/components/message_bubble.dart';
 import 'package:proj_chat/core/models/chat_message.dart';
+import 'package:proj_chat/core/services/auth/auth_service.dart';
 import 'package:proj_chat/core/services/chat/chat_service.dart';
 
 class Messages extends StatelessWidget {
@@ -10,9 +12,10 @@ class Messages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = AuthService().currentUser;
     return StreamBuilder<List<ChatMessage>>(
       stream: ChatService().messagesStream(),
-      builder: (context, snapshot) {
+      builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
             child: CircularProgressIndicator(),
@@ -26,7 +29,11 @@ class Messages extends StatelessWidget {
           return ListView.builder(
             reverse: true,
             itemCount: msgs.length,
-            itemBuilder: (context, index) => Text(msgs[index].text),
+            itemBuilder: (ctx, i) => MessageBubble(
+              key: ValueKey(msgs[i].id),
+              message: msgs[i],
+              belongsToCurrentUser: currentUser?.id == msgs[i].userId,
+            ),
           );
         }
       },
