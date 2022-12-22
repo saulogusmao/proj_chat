@@ -15,8 +15,10 @@ class MessageBubble extends StatelessWidget {
   });
 
   Widget _showUserImage(String imageURL) {
+    ImageProvider? provider;
+
     return CircleAvatar(
-      backgroundColor: Colors.pink,
+      backgroundImage: provider,
     );
   }
 
