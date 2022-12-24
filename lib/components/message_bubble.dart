@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:proj_chat/core/models/chat_message.dart';
 
 class MessageBubble extends StatelessWidget {
+  static const _defaultImage = 'assets/images/avatar.png';
   final ChatMessage message;
   final bool belongsToCurrentUser;
 
@@ -16,6 +19,15 @@ class MessageBubble extends StatelessWidget {
 
   Widget _showUserImage(String imageURL) {
     ImageProvider? provider;
+    final uri = Uri.parse(imageURL);
+
+    if (uri.path.contains(_defaultImage)) {
+      provider = AssetImage(_defaultImage);
+    } else if (uri.scheme.contains('http')) {
+      provider = NetworkImage(uri.toString());
+    } else {
+      provider = FileImage(File(uri.toString()));
+    }
 
     return CircleAvatar(
       backgroundImage: provider,
