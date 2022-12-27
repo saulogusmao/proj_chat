@@ -6,6 +6,8 @@ import 'package:proj_chat/components/messages.dart';
 import 'package:proj_chat/components/new_message.dart';
 import 'package:proj_chat/core/services/auth/auth_mock_service.dart';
 import 'package:proj_chat/core/services/auth/auth_service.dart';
+import 'package:proj_chat/core/services/notification/chat_notification_service.dart';
+import 'package:provider/provider.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
@@ -16,33 +18,58 @@ class ChatPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Cod3r chat'),
         actions: [
-          DropdownButton(
-            icon: Icon(
-              Icons.more_vert,
-              color: Theme.of(context).primaryIconTheme.color,
+          DropdownButtonHideUnderline(
+            //para tirar a 'linha' no appBar
+            child: DropdownButton(
+              icon: Icon(
+                Icons.more_vert,
+                color: Theme.of(context).primaryIconTheme.color,
+              ),
+              items: [
+                DropdownMenuItem(
+                  value: 'logout',
+                  child: Container(
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.exit_to_app,
+                          color: Colors.black87,
+                        ),
+                        SizedBox(width: 10),
+                        Text('Sair'),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+              onChanged: (value) {
+                if (value == 'logout') {
+                  AuthService().logout();
+                }
+              },
             ),
-            items: [
-              DropdownMenuItem(
-                value: 'logout',
-                child: Container(
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.exit_to_app,
-                        color: Colors.black87,
-                      ),
-                      SizedBox(width: 10),
-                      Text('Sair'),
-                    ],
+          ),
+          Stack(
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.notifications),
+              ),
+              Positioned(
+                top: 5,
+                right: 5,
+                child: CircleAvatar(
+                  maxRadius: 10,
+                  backgroundColor: Colors.red.shade800,
+                  child: Text(
+                    '${Provider.of<ChatNotificationService>(context).itemsCount}',
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
                   ),
                 ),
               ),
             ],
-            onChanged: (value) {
-              if (value == 'logout') {
-                AuthService().logout();
-              }
-            },
           ),
         ],
       ),
