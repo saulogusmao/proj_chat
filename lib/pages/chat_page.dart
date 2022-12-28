@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:proj_chat/components/messages.dart';
 import 'package:proj_chat/components/new_message.dart';
+import 'package:proj_chat/core/models/chat_notification.dart';
 import 'package:proj_chat/core/services/auth/auth_mock_service.dart';
 import 'package:proj_chat/core/services/auth/auth_service.dart';
 import 'package:proj_chat/core/services/notification/chat_notification_service.dart';
@@ -88,6 +91,20 @@ class ChatPage extends StatelessWidget {
           ],
         ),
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.add),
+      //   onPressed: () {
+      //     Provider.of<ChatNotificationService>(
+      //       context,
+      //       listen: false,
+      //     ).add(
+      //       ChatNotification(
+      //         title: 'Mais uma notificação!',
+      //         body: Random().nextDouble().toString(),
+      //       ),
+      //     );
+      //   },
+      // ),
     );
   }
 }
