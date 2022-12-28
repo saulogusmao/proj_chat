@@ -7,6 +7,7 @@ import 'package:proj_chat/components/new_message.dart';
 import 'package:proj_chat/core/services/auth/auth_mock_service.dart';
 import 'package:proj_chat/core/services/auth/auth_service.dart';
 import 'package:proj_chat/core/services/notification/chat_notification_service.dart';
+import 'package:proj_chat/pages/notification_page.dart';
 import 'package:provider/provider.dart';
 
 class ChatPage extends StatelessWidget {
@@ -52,8 +53,14 @@ class ChatPage extends StatelessWidget {
           Stack(
             children: [
               IconButton(
-                onPressed: () {},
                 icon: Icon(Icons.notifications),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (ctx) {
+                      return NotificationPage();
+                    }),
+                  );
+                },
               ),
               Positioned(
                 top: 5,
