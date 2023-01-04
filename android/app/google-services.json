@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "686518732964",
+    "project_id": "chat-31bcf",
+    "storage_bucket": "chat-31bcf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686518732964:android:f01501cce64d0be340be31",
+        "android_client_info": {
+          "package_name": "br.com.s4ulo.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "686518732964-d1nf5bg4fmm3d7nl37iilb5rkn6ltis7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDByajKPNtrOmz8GtS0lig8fUx3n31Eobk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "686518732964-d1nf5bg4fmm3d7nl37iilb5rkn6ltis7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
