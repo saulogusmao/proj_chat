@@ -6,7 +6,7 @@ import 'package:proj_chat/core/models/chat_user.dart';
 
 import 'package:proj_chat/core/services/auth/auth_service.dart';
 
-class AuthMockService implements AuthService {
+class AuthFirebaseService implements AuthService {
   static const _defaultUser = ChatUser(
     id: '456',
     name: 'Ana',

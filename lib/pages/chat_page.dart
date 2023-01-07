@@ -7,7 +7,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:proj_chat/components/messages.dart';
 import 'package:proj_chat/components/new_message.dart';
 import 'package:proj_chat/core/models/chat_notification.dart';
-import 'package:proj_chat/core/services/auth/auth_mock_service.dart';
+import 'package:proj_chat/core/services/auth/auth_firebase_service.dart';
 import 'package:proj_chat/core/services/auth/auth_service.dart';
 import 'package:proj_chat/core/services/notification/chat_notification_service.dart';
 import 'package:proj_chat/pages/notification_page.dart';
