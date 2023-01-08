@@ -2,25 +2,20 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:proj_chat/core/models/chat_user.dart';
 
 import 'package:proj_chat/core/services/auth/auth_service.dart';
 
 class AuthFirebaseService implements AuthService {
-  static const _defaultUser = ChatUser(
-    id: '456',
-    name: 'Ana',
-    email: 'ana@cod3r.com.br',
-    imageURL: 'assets/images/avatar.png',
-  );
-  static final Map<String, ChatUser> _users = {
-    _defaultUser.email: _defaultUser,
-  };
   static ChatUser? _currentUser;
-  static MultiStreamController<ChatUser?>? _controller;
-  static final _userStream = Stream<ChatUser?>.multi((controller) {
-    _controller = controller;
-    _updateUser(_defaultUser);
+
+  static final _userStream = Stream<ChatUser?>.multi((controller) async {
+    final authChanges = FirebaseAuth.instance.authStateChanges();
+    await for (final user in authChanges) {
+      _currentUser = user == null ? null : _toChatUser(user);
+      controller.add(_currentUser);
+    }
   });
 
   ChatUser? get currentUser {
@@ -37,26 +32,29 @@ class AuthFirebaseService implements AuthService {
     String password,
     File? image,
   ) async {
-    final newUser = ChatUser(
-      id: Random().nextDouble().toString(),
-      name: name,
+    final auth = FirebaseAuth.instance;
+    UserCredential credential = await auth.createUserWithEmailAndPassword(
       email: email,
-      imageURL: image?.path ?? 'assets/images/avatar.png',
+      password: password,
     );
-    _users.putIfAbsent(email, () => newUser);
-    _updateUser(newUser);
+    if (credential.user == null) return;
+
+    credential.user?.updateDisplayName(name);
+    //credential.user?.updatePhotoURL(photoURL);
   }
 
-  Future<void> login(String email, String password) async {
-    _updateUser(_users[email]);
-  }
+  Future<void> login(String email, String password) async {}
 
   Future<void> logout() async {
-    _updateUser(null);
+    FirebaseAuth.instance.signOut();
   }
 
-  static void _updateUser(ChatUser? user) {
-    _currentUser = user;
-    _controller?.add(_currentUser);
+  static ChatUser _toChatUser(User user) {
+    return ChatUser(
+      id: user.uid,
+      name: user.displayName ?? user.email!.split('@')[0],
+      email: user.email!,
+      imageURL: user.photoURL ?? 'assets/images/avatar.png',
+    );
   }
 }
